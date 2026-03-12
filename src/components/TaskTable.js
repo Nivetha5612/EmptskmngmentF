@@ -86,13 +86,15 @@ function TaskTable({tasks,onDelete,onUpdateStatus}){
             <td style={tdStyle}>
 
               <select
-                value={task.status?.statusName}
-                onChange={(e)=>onUpdateStatus(task.id,e.target.value)}
-              >
-                <option value="Pending">Pending</option>
-                <option value="In Progress">In Progress</option>
-                <option value="Completed">Completed</option>
-              </select>
+  value={task.status?.id}
+  onChange={(e)=>onUpdateStatus(task.id, Number(e.target.value))}
+>
+
+<option value={1}>Pending</option>
+<option value={2}>In Progress</option>
+<option value={3}>Completed</option>
+
+</select>
 
               <button
                 onClick={()=>onDelete(task.id)}

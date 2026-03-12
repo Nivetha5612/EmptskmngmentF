@@ -12,7 +12,7 @@ function Tasks(){
   const [title,setTitle] = useState("");
   const [description,setDescription] = useState("");
   const [employeeId,setEmployeeId] = useState("");
-  const [status,setStatus] = useState(0);
+  const [status,setStatus] = useState(1); // changed default
   const [dueDate,setDueDate] = useState("");
 
   const [openAdd,setOpenAdd] = useState(false);
@@ -23,7 +23,7 @@ function Tasks(){
     API.get("/tasks")
       .then(res=>{
         setTasks(res.data);
-        setFilteredTasks(res.data); // important
+        setFilteredTasks(res.data);
       });
   }
 
@@ -40,41 +40,78 @@ function Tasks(){
 
   // Create task
   const addTask = ()=>{
-    API.post("/tasks",{
-      title,
-      description,
-      employeeId,
-      status,
-      dueDate
-    }).then(()=>{
-      loadTasks();
-      setOpenAdd(false);
-    })
+
+  if(!title || !description || !employeeId || !dueDate){
+    alert("Please fill all fields");
+    return;
   }
 
+  API.post("/tasks",{
+    title: title,
+    description: description,
+    employeeId: Number(employeeId),
+    status: Number(status),
+    dueDate: dueDate
+  })
+  .then(()=>{
+    loadTasks();
+    setOpenAdd(false);
+  })
+  .catch(err=>{
+    console.error(err);
+  });
+}
   // Delete task
   const deleteTask = (id)=>{
     API.delete(`/tasks/${id}`)
       .then(()=>loadTasks());
   }
 
+  const getStatusName = (statusId)=>{
+    if(statusId == 1) return "Pending";
+    if(statusId == 2) return "In Progress";
+    if(statusId == 3) return "Completed";
+  }
+
   // Update status
   const updateStatus = (taskId,newStatus)=>{
-    API.put(`/tasks/${taskId}`,{
-      status:newStatus
-    }).then(()=>loadTasks());
+
+    API.put("/tasks/update-status",{
+      taskId: taskId,
+      statusId: Number(newStatus)
+      
+    }).then(()=>{
+
+      const updatedTasks = tasks.map(task =>
+  task.id === taskId
+    ? {
+        ...task,
+        status: {
+          ...task.status,
+          id: Number(newStatus),
+          statusName: getStatusName(newStatus)
+        }
+      }
+    : task
+);
+
+      setTasks(updatedTasks);
+      setFilteredTasks(updatedTasks);
+
+    });
+
   }
 
   // Filter tasks
   const handleFilterChange = (status)=>{
-    
+
     setFilterStatus(status);
 
     if(status === "all"){
       setFilteredTasks(tasks);
     }
     else{
-      const filtered = tasks.filter(t => t.status === status);
+      const filtered = tasks.filter(t => t.status?.statusName === status); 
       setFilteredTasks(filtered);
     }
   }
@@ -167,7 +204,7 @@ RESET
  onChange={(e)=>setEmployeeId(e.target.value)}
  style={{width:"100%",height:"40px",marginTop:"10px"}}
 >
-<option>Select Employee</option>
+<option value="">Select Employee</option>
 
 {employees.map(emp=>(
 <option key={emp.id} value={emp.id}>

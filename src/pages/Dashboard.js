@@ -3,7 +3,6 @@ import axios from "axios";
 
 import DashboardCards from "../components/DashboardCards";
 import TaskChart from "../components/TaskChart";
-import EmployeeWorkloadChart from "../components/EmployeeWorkloadChart";
 import OverduePanel from "../components/OverduePanel";
 
 function Dashboard(){
@@ -39,7 +38,6 @@ function Dashboard(){
 
  <TaskChart data={data} />
 
- <EmployeeWorkloadChart data={data} />
 
  </div>
 
