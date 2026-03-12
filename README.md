@@ -1,79 +1,68 @@
-
-# Employee Task Management System – Backend
+# Employee Task Management System – Frontend
 
 ## System Overview
 
-This project contains the backend API for the Employee Task Management System.  
-It is built using **ASP.NET Core Web API** and **Entity Framework Core** with SQL Server.  
-The API handles employee management, task assignment, and task status updates.
+This repository contains the React frontend for the Employee Task Management System.  
+The frontend interacts with the ASP.NET Core backend API to manage employees and tasks.
 
-The backend provides REST APIs that are consumed by the React frontend.
+It provides a simple dashboard where users can view tasks, create new tasks, update task status, and manage employees.
 
+---
 
 ## Technology Stack
 
-Framework: ASP.NET Core Web API  
-Database: SQL Server with Entity Framework Core  
-Real-time updates: SignalR  
-Architecture: Repository Pattern with DTOs  
+Framework: React.js  
+UI Library: Material UI  
+API Communication: Axios  
 
-
+---
 
 ## Core Features
 
-- Manage employees
-- Create and assign tasks to employees
-- Update task status (Pending / In Progress / Completed)
+- View employees and tasks
+- Create new tasks
+- Update task status
 - Delete tasks
 - Filter tasks by status
-- Real-time updates using SignalR
+- Simple dashboard interface
 
+---
 
+## Application Flow
 
-## System Initialization
+1. The frontend communicates with the backend API.
+2. Users can create tasks and assign them to employees.
+3. Task status can be updated from the task table.
+4. Filters allow users to view tasks by status.
 
-Before running the project:
+---
 
-1. Make sure **SQL Server** is installed.
-2. Update the **database connection string** in `appsettings.json`.
-3. Apply the database migrations.
-
-
-
-## Database Setup
-
-This project uses **Entity Framework Core migrations**.
-
-Run the following command to create the database:
-
-dotnet ef database update
-
-All migration scripts are available in the **Migrations** folder.
-
-
-
-## Running the Backend
+## Running the Frontend
 
 Clone the repository:
 
-git clone https://github.com/Nivetha5612/EmpManagementB.git   
+git clone https://github.com/Nivetha5612/EmpManagementFrontend.git
 
 Navigate to the project folder:
 
-cd EmpManagementB
+cd EmpManagementFrontend
 
-Run the API:
+Install dependencies:
 
-dotnet run
+npm install
 
-The API will run at:
+Run the application:
 
-http://localhost:5000
+npm start
 
+The application will run at:
 
+http://localhost:3000
 
-## Frontend Repository
+---
 
-Frontend code for this project:
+## Backend Repository
 
-https://github.com/Nivetha5612/EmptskmngmentF
+Backend API for this project:
+
+https://github.com/Nivetha5612/EmpManagementB
